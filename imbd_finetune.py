@@ -11,6 +11,13 @@ import random
 from transformers import BertTokenizer, BertModel
 import torch
 from torchtext.datasets import IMDB
+import argparse
+parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
+parser.add_argument('--plr', '--pretrained learning-rate', default=3e-6, type=float,
+                    metavar='LR', help='pretrained learning rate', dest='lr')
+parser.add_argument('--flr','--finetuned learning-rate', default=1e-5, type=float, metavar='LR',
+                    help='Finetune Learning Rate', dest = 'lr')
+args = parser.parse_args()
 
 def test_accu(num,model):
   tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -140,7 +147,7 @@ train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True
 
 # Define model, optimizer, and hyperparameters
 student = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels = 2).to(device)
-optimizer = AdamW(student.parameters(), lr=1e-5)
+optimizer = AdamW(student.parameters(), lr=args.plr)
 alpha = 0.2
 temperature = 2.0
 epochs = 10
@@ -205,7 +212,7 @@ train_loader = DataLoader(MyDataset([text for _, text in train_data_subset],
                                     tokenizer),
                           batch_size=4)
 
-optimizer = AdamW(student.parameters(), lr=1e-5)
+optimizer = AdamW(student.parameters(), lr=args.flr)
 epochs = 10
 
 # Train the model
