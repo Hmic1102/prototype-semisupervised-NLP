@@ -17,6 +17,8 @@ parser.add_argument('--plr', '--pretrained learning-rate', default=3e-6, type=fl
                     metavar='LR', help='pretrained learning rate', dest='lr')
 parser.add_argument('--flr','--finetuned learning-rate', default=1e-5, type=float, metavar='LR',
                     help='Finetune Learning Rate', dest = 'lr')
+parser.add_argument('--alpha', default=0.2, type=float, metavar='A',
+                    help='Alpha-soft label loss')
 args = parser.parse_args()
 
 def test_accu(num,model):
@@ -148,7 +150,7 @@ train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True
 # Define model, optimizer, and hyperparameters
 student = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels = 2).to(device)
 optimizer = AdamW(student.parameters(), lr=args.plr)
-alpha = 0.2
+alpha = args.alpha
 temperature = 2.0
 epochs = 10
 
