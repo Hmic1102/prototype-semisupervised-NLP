@@ -85,7 +85,7 @@ model = BertModel.from_pretrained('bert-base-uncased').to(device)
 test_dataset = YahooAnswers(root=".torchtext/cache", split='test')
 test_data = [(label, text) for label, text in test_dataset]
 random.shuffle(test_data)
-test_data_subset = test_data[:2000]
+test_data_subset = test_data[:20]
 
 # Compute soft labels
 with open('yahoo.npy', 'rb') as f:
@@ -180,7 +180,7 @@ for epoch in range(epochs):
         optimizer.step()
     print(f"Epoch: {epoch}, Loss: {loss.item()}")
 
-test_accu(5000,student)
+test_accu(50,student)
 # Save model
 
 
@@ -233,4 +233,4 @@ for epoch in range(epochs):
 
         if i % 100 == 0:
             print(f"Epoch: {epoch}, Step: {i}, Loss: {loss_hard.item()}")
-    test_accu(5000,student)
+    test_accu(50,student)
