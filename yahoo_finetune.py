@@ -15,9 +15,9 @@ from torchtext.datasets import YahooAnswers
 
 parser = argparse.ArgumentParser(description='PyTorch ImageNet Training')
 parser.add_argument('--plr', '--pretrained learning-rate', default=3e-6, type=float,
-                    metavar='LR', help='pretrained learning rate', dest='lr')
+                    metavar='LR', help='pretrained learning rate')
 parser.add_argument('--flr','--finetuned learning-rate', default=1e-5, type=float, metavar='LR',
-                    help='Finetune Learning Rate', dest = 'lr')
+                    help='Finetune Learning Rate')
 parser.add_argument('--alpha', default=0.2, type=float, metavar='A',
                     help='Alpha-soft label loss')
 args = parser.parse_args()
