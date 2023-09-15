@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def filtering(Prob):
+def filtering(Prob,percent):
     
     filtered_samples = []
 
@@ -10,7 +10,7 @@ def filtering(Prob):
     
         rest_softmax_scores_sum = np.sum(softmax) - max_softmax_score
     
-        if max_softmax_score < 0.5 * rest_softmax_scores_sum:
+        if max_softmax_score < percent * rest_softmax_scores_sum:
             continue
     
         filtered_samples.append(softmax)
