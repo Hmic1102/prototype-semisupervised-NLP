@@ -22,13 +22,17 @@ parser.add_argument('--alpha', default=0.2, type=float, metavar='A',
                     help='Alpha-soft label loss')
 args = parser.parse_args()
 
-def filtering(Prob,percent):
+def filtering(Prob,percent,texts):
   filtered_samples = []
-  for softmax in Prob:
-    max_softmax_score = np.max(softmax)
-    rest_softmax_scores_sum = np.sum(softmax) - max_softmax_score
-    if max_softmax_score < percent * rest_softmax_scores_sum:
-      continue
+  filtered_texts = []
+  for index,softmax in enumerate(Prob):
+      max_softmax_score = np.max(softmax)
+      rest_softmax_scores_sum = np.sum(softmax) - max_softmax_score
+      if max_softmax_score < percent * rest_softmax_scores_sum:
+          continue
+      filtered_samples.append(softmax)
+      filtered_texts.append(texts[index])
+  return filtered_samples,filtered_texts
 def test_accu(num,model):
   tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -127,9 +131,10 @@ for label, line in test_data_subset:
     hard.append(label - 1)
 
 Prob = [to_prob(i, temperature) for i in Distances]
-Prob = filtering(Prob,0.3)
+Prob,text = filtering(Prob,0.32,text)
+print(len(Prob))
 labels = [np.argmax(i) for i in Prob]
-print(len(labels))
+
 
 
 # Define custom dataset
