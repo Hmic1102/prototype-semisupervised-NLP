@@ -127,8 +127,9 @@ for label, line in test_data_subset:
     hard.append(label - 1)
 
 Prob = [to_prob(i, temperature) for i in Distances]
-Prob = filtering(Prob,0.35)
+Prob = filtering(Prob,0.3)
 labels = [np.argmax(i) for i in Prob]
+print(len(labels))
 
 
 # Define custom dataset
