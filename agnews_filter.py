@@ -99,7 +99,7 @@ random.shuffle(test_data)
 test_data_subset = test_data[:5000]
 
 # Compute soft labels
-with open('yahoo.npy', 'rb') as f:
+with open('AGnews.npy', 'rb') as f:
     proto = np.load(f, allow_pickle=True)
 
 def to_prob(distances, temperature=1.0):
@@ -123,7 +123,7 @@ for label, line in test_data_subset:
     mask = inputs['attention_mask']
     sum_embeddings = torch.sum(embeddings * mask.unsqueeze(-1), dim=1)
     mean_embeddings = sum_embeddings / mask.sum(dim=1, keepdim=True)
-    Distance = [0] * 10
+    Distance = [0] * 4
     for i in proto.flatten()[0]:
         Distance[i-1] = euclidean(mean_embeddings.cpu().flatten(), proto.flatten()[0][i])
     Distances.append(Distance)
@@ -163,7 +163,7 @@ batch_size = 4
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
 # Define model, optimizer, and hyperparameters
-student = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=10).to(device)
+student = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=4).to(device)
 optimizer = AdamW(student.parameters(), lr=args.plr)
 alpha = args.alpha
 temperature = 2.0
