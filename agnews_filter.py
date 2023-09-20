@@ -131,7 +131,7 @@ for label, line in test_data_subset:
     hard.append(label - 1)
 
 Prob = [to_prob(i, temperature) for i in Distances]
-Prob,text = filtering(Prob,0.32,text)
+Prob,text = filtering(Prob,1,text)
 print(len(Prob))
 labels = [np.argmax(i) for i in Prob]
 
@@ -167,7 +167,7 @@ student = BertForSequenceClassification.from_pretrained('bert-base-uncased', num
 optimizer = AdamW(student.parameters(), lr=args.plr)
 alpha = args.alpha
 temperature = 2.0
-epochs = 20
+epochs = 10
 
 # Train model
 for epoch in range(epochs):
