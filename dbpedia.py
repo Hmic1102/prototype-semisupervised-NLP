@@ -131,7 +131,7 @@ for label, line in test_data_subset:
     hard.append(label - 1)
 
 Prob = [to_prob(i, temperature) for i in Distances]
-Prob,text = filtering(Prob,1,text)
+Prob,text = filtering(Prob,0.1,text)
 print(len(Prob))
 labels = [np.argmax(i) for i in Prob]
 
