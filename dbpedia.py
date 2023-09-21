@@ -99,7 +99,7 @@ random.shuffle(test_data)
 test_data_subset = test_data[:5000]
 
 # Compute soft labels
-with open('AGnews.npy', 'rb') as f:
+with open('DBpedia.npy', 'rb') as f:
     proto = np.load(f, allow_pickle=True)
 
 def to_prob(distances, temperature=1.0):
