@@ -148,7 +148,7 @@ for label, line in train_data_subset:
         Distance[i-1] = euclidean(mean_embeddings.cpu().flatten(), proto.flatten()[0][i])
     Distances_gamma.append(Distance)
     hard_gamma.append(label - 1)
-Distances =[pd.DataFrame(Distances_gamma)[pd.Series(hard)==0][0].to_numpy(),pd.DataFrame(Distances_gamma)[pd.Series(hard)==1][1].to_numpy()]
+Distances =[pd.DataFrame(Distances_gamma)[pd.Series(hard_gamma)==0][0].to_numpy(),pd.DataFrame(Distances_gamma)[pd.Series(hard_gamma)==1][1].to_numpy()]
 gamma_parameters = [get_gamma_parameters(distance) for distance in Distances_gamma]
 print(gamma_parameters)
 
