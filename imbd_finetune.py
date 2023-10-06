@@ -147,14 +147,12 @@ train_dataset = MyDataset(text, labels, Prob, tokenizer)
 batch_size = 4
 train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
-# Define model, optimizer, and hyperparameters
 student = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels = 2).to(device)
 optimizer = AdamW(student.parameters(), lr=args.plr)
 alpha = args.alpha
 temperature = 2.0
 epochs = 10
 
-# Train model
 for epoch in range(epochs):
     student.train()
     for i, batch in enumerate(train_dataloader):
